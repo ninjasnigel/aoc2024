@@ -1,11 +1,7 @@
 with open("day2/data.aoc", "r") as file: 
     data = [line.strip("\n") for line in file.readlines()]
 
-new_data = []
-
-for line in data:
-    number = line.split(" ")
-    new_data += [[int(x) for x in number]]
+data = [[int(x) for x in line.split(" ")] for line in data]
 
 def run_tests(seq, i): # replace: preivous, current, next
     test_one = test_seq(seq[:i] + seq[i+1:], fault_used=True)
@@ -16,7 +12,6 @@ def run_tests(seq, i): # replace: preivous, current, next
     return 0
 
 def test_seq(seq, fault_used=False):
-    print("seq", seq)
     dec, inc = False, False
     if seq[1] > seq[0] and seq[1] - seq[0] <= 3:
         inc = True
@@ -58,7 +53,7 @@ def test_seq(seq, fault_used=False):
 #part1
 p1 = 0
 p2 = 0
-for seq in new_data:
+for seq in data:
     p1 += test_seq(seq, fault_used=True)
     p2 += test_seq(seq, fault_used=False)
 

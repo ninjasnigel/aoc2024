@@ -17,7 +17,7 @@ def test_seq(seq, fault_used=False):
         inc = True
     elif seq[1] < seq[0] and seq[0] - seq[1] <= 3:
         dec = True
-    if not inc and not dec and not fault_used: # equal start
+    if not inc and not dec and not fault_used: # invalid start
         test_one = test_seq(seq[1:], fault_used=True)
         test_two = test_seq(seq[:1] + seq[2:], fault_used=True)
         if test_one == 1 or test_two == 1:

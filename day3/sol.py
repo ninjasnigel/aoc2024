@@ -16,6 +16,8 @@ def check_mul(data):
             elif rest[i] != ")":
                 break
             else:
+                if not (num1 and num2):
+                    return 0
                 return int(num1) * int(num2)
     return 0
 

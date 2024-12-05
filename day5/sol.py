@@ -29,13 +29,11 @@ valids = []
 part1 = 0
 
 for k,seq in enumerate(seqs):
-    this_seq = True
     for i in range(len(seq)):
         start = seq[i]
         if not check_seq(start, seq[i:]):
-            this_seq = False
             break
-    if this_seq: 
+    else: # axel inspo
         part1 += seq[int(len(seq)/2)]
         valids += [k]
 

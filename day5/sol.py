@@ -4,28 +4,31 @@ with open("day5/data.aoc", "r") as file:
 pairs = []
 seqs = []
 
-for line in data:
-    if line == "": break
-    n1, n2 = line.split("|")
-    n1, n2 = int(n1), int(n2)
-    pairs.append([n1, n2])
+# data format ----
 
 ready = False
 for line in data:
-    if ready: seqs += [[int(x) for x in line.split(",")]]
-    if line == "": ready = True
+    if line == "": 
+        ready = True
+        continue
+    if ready:
+        seqs += [[int(x) for x in line.split(",")]]
+        continue
+    pair = line.split("|")
+    pairs.append([int(pair[0]), int(pair[1])])
 
-def check_seq(start, num):
-    for following in num[1:]:
+# part 1 ----
+
+def check_seq(start, seq):
+    for following in seq[1:]:
         if [following,start] in pairs:
-            print([following, start], " in pairs")
             return False
     return True
 
 valids = []
-valid = 0
+part1 = 0
 
-for o,seq in enumerate(seqs):
+for k,seq in enumerate(seqs):
     this_seq = True
     for i in range(len(seq)):
         start = seq[i]
@@ -33,13 +36,12 @@ for o,seq in enumerate(seqs):
             this_seq = False
             break
     if this_seq: 
-        valid += seq[int(len(seq)/2)]
-        valids += [o]
+        part1 += seq[int(len(seq)/2)]
+        valids += [k]
 
-print(valid)
+print(part1)
 
-
-# bubble sort the arrays
+# bubble sort the arrays ------ p2
 
 new_order = []
 import copy
@@ -58,6 +60,6 @@ for seq in seqs:
 part2 = 0
 
 for i, seq in enumerate(new_order):
-    if i in valids:
-        continue
-    part2 += seq[int(len(seq)/2)]
+    if i not in valids: part2 += seq[int(len(seq)/2)]
+
+print(part2)

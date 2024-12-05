@@ -6,24 +6,15 @@ seqs = []
 
 # data format ----
 
-ready = False
+second = False
+
 for line in data:
-    if line == "": 
-        ready = True
+    if not line:
+        second = True
         continue
-    if ready:
-        seqs += [[int(x) for x in line.split(",")]]
-        continue
-    pair = line.split("|")
-    pairs.append([int(pair[0]), int(pair[1])])
-
+    if second: seqs += [[int(x) for x in line.split(",")]]
+    else: pairs += [[int(x) for x in line.split("|")]]
 # part 1 ----
-
-def check_seq(start, seq):
-    for following in seq[1:]:
-        if [following,start] in pairs:
-            return False
-    return True
 
 valids = []
 part1 = 0
@@ -31,8 +22,7 @@ part1 = 0
 for k,seq in enumerate(seqs):
     for i in range(len(seq)):
         start = seq[i]
-        if not check_seq(start, seq[i:]):
-            break
+        if any([[following, start] in pairs for following in seq[i+1:]]): break
     else: # axel inspo
         part1 += seq[int(len(seq)/2)]
         valids += [k]
